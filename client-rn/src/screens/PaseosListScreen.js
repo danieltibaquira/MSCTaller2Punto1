@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground} from 'react-native';
+import { color } from 'react-native-elements/dist/helpers';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { Context } from '../context/PaseoContext';
 
@@ -74,12 +75,14 @@ const styles = StyleSheet.create({
   contHor: {
     margin: 8,
     flexDirection: 'row',
+    color: '#52734D'
   },
   nameStyle:{
     textAlign: 'center',
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop: 8
+    marginTop: 8,
+    color: '#52734D'
   },
   param: {
     marginHorizontal: 8,

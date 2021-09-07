@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, StyleSheet, ImageBackground, TextInput} from 'react-native';
+import { View, StyleSheet, ImageBackground } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import { Button, Text, Overlay, Input } from 'react-native-elements';
 import { Context } from '../context/PaseoContext';
 
@@ -17,18 +18,13 @@ const HomeScreen = ({navigation}) => {
   const [textUpdated, setTextUpdated] = useState('');
   const [textDeleted, setTextDeleted] = useState('');
 
-  const [idPaseo, setIdPaseo] = useState(8);
-  const [paseoOrigin, setPaseoOrigin] = useState('')
-  const [paseoDest, setPaseoDest] = useState('');
-  const [namePaseo, setNamePaseo] = useState('');
 
   const openDeleteModal = () => {
     setVisibDeleteModal(!visibDeleteModal);
-    setTextDeleted('');
-    setIdPaseo(0);
   }
 
   const DeleteModal = () =>{
+  const [idPaseo, setIdPaseo] = useState(8);
 
     return(
       <Overlay
@@ -36,9 +32,10 @@ const HomeScreen = ({navigation}) => {
         onBackdropPress={openDeleteModal}
         overlayStyle={styles.deleteModalStyle}
       >
-        <Input
+        <TextInput
           placeholder='Ingresa el id del paseo a eliminar'
-          onEndEditing={value => setIdPaseo(value)}
+          value={idPaseo}
+          onChangeText={value => setIdPaseo(value)}
           keyboardType='numeric'
           style={styles.inputStyle}
           />
@@ -47,10 +44,8 @@ const HomeScreen = ({navigation}) => {
           buttonStyle = {styles.buttonCont}
           titleStyle = {styles.titleStyle}
           onPress={() => {
-            console.log(idPaseo);
-            deletePaseo({idPaseo})
-            setIdPaseo(0);
-
+            deletePaseo({idPaseo});
+            openDeleteModal();
           }}
           />
         <Text style ={{textAlign: 'center', }}>
@@ -63,30 +58,36 @@ const HomeScreen = ({navigation}) => {
 
   const openUpdateModal = () => {
     setVisibUpdateModal(!visibUpdateModal);
-    setTextUpdated('');
   }
 
 
   const UpdateModal = () => {
+    const [idPaseo, setIdPaseo] = useState(8);
+    const [paseoOrigin, setPaseoOrigin] = useState('')
+    const [paseoDest, setPaseoDest] = useState('');
+
     return (
       <Overlay
         isVisible={visibUpdateModal}
         onBackdropPress={openUpdateModal}
         overlayStyle={styles.updateModalStyle}
       >
-        <Input
+        <TextInput
           placeholder='Id del paseo a actualizar'
+          value={idPaseo}
           onChangeText={value => setIdPaseo(value)}
           keyboardType='numeric'
           style={styles.inputStyle}
           />
-        <Input
+        <TextInput
           placeholder='Nuevo origen del paseo'
+          value={paseoOrigin}
           onChangeText={value => setPaseoOrigin(value)}
           style={styles.inputStyle}
           />
-        <Input
+        <TextInput
           placeholder='Nuevo destino del paseo'
+          value={paseoDest}
           onChangeText={value => setPaseoDest(value)}
           style={styles.inputStyle}
           />
@@ -95,7 +96,8 @@ const HomeScreen = ({navigation}) => {
           buttonStyle = {styles.buttonCont}
           titleStyle = {styles.titleStyle}
           onPress={() => {
-            updatePaseo({idPaseo, paseoOrigin, paseoDest})
+            updatePaseo({idPaseo, paseoOrigin, paseoDest});
+            openUpdateModal();
           }}
           />
           <Text style ={{textAlign: 'center', }}>
@@ -113,30 +115,39 @@ const HomeScreen = ({navigation}) => {
 
 
   const CreateModal = () => {
+    const [idPaseo, setIdPaseo] = useState(8);
+    const [paseoOrigin, setPaseoOrigin] = useState('')
+    const [paseoDest, setPaseoDest] = useState('');
+    const [namePaseo, setNamePaseo] = useState('');
+
     return (
       <Overlay
         isVisible={visibCreateModal}
         onBackdropPress={openCreateModal}
         overlayStyle={styles.createModalStyle}
       >
-        <Input
+        <TextInput
           placeholder='Id del paseo a crear'
+          value={idPaseo}
           onChangeText={value => setIdPaseo(value)}
           keyboardType='numeric'
           style={styles.inputStyle}
           />
-        <Input
+        <TextInput
           placeholder='Nombre del paseo'
+          value={namePaseo}
           onChangeText={value => setNamePaseo(value)}
           style={styles.inputStyle}
           />
-        <Input
+        <TextInput
           placeholder='Origen del paseo'
+          value={paseoOrigin}
           onChangeText={value => setPaseoOrigin(value)}
           style={styles.inputStyle}
           />
-        <Input
+        <TextInput
           placeholder='Destino del paseo'
+          value={paseoDest}
           onChangeText={value => setPaseoDest(value)}
           style={styles.inputStyle}
           />
@@ -145,7 +156,8 @@ const HomeScreen = ({navigation}) => {
           buttonStyle = {styles.buttonCont}
           titleStyle = {styles.titleStyle}
           onPress={() => {
-            createPaseo({idPaseo, paseoOrigin, paseoDest, namePaseo})
+            createPaseo({idPaseo, paseoOrigin, paseoDest, namePaseo});
+            openCreateModal();
           }}
           />
           <Text style ={{textAlign: 'center', }}>
@@ -219,17 +231,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   deleteModalStyle:{
-    height: 180,
+    height: 150,
     width: 330,
     borderRadius: 25,
   },
   updateModalStyle:{
-    height: 370,
+    height: 250,
     width: 330,
     borderRadius: 25,
   },
   createModalStyle:{
-    height: 470,
+    height: 310,
     width: 330,
     borderRadius: 25,
   },

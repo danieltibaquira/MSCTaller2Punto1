@@ -1,10 +1,12 @@
 import React from 'react';
+import {View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import  PaseoListScreen from './src/screens/PaseosListScreen';
 import  HomeScreen from './src/screens/HomeScreen';
-import { navigationRef } from './src/rootNavigator';
+import { navigationRef, navigate } from './src/rootNavigator';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +22,15 @@ const stackOptions = (nombreScreen) => {
             fontSize: 24,
         },
       headerLeft: () => {
+        if(nombreScreen==='Paseos'){
+          return(
+           <View style={{ marginLeft: 20 }}>
+                <TouchableOpacity
+            onPress={() => navigate('Home')}>
+                    <MaterialIcons name="arrow-back-ios" size={28} color="#FEFFDE" />
+                </TouchableOpacity>
+            </View>
+          )}
 
       }
     });

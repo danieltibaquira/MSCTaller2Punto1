@@ -20,10 +20,10 @@ const PaseoReducer = (state, action) => {
 const getAll = (dispatch) => async() => {
 	try{
 		const response = await instance.get();
-		// console.log(response.data);
 		const resPas = response.data
 		dispatch({type: 'getAll', data: resPas})
 	}catch(err){
+        console.log("Llego al catch: ", err.message)
 		dispatch({type: 'add_error', data: err.message});
 	}
 }
