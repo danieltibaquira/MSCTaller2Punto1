@@ -1,7 +1,3 @@
-# TUTORIAL MSC
-
-Date: September 9, 2021
-Done: No
 
 # PARA CORRER EL SERVIDOR
 
@@ -89,7 +85,7 @@ Luego de instalar node
 - [ ]  Instalar las dependencias del proyecto
 
     ```bash
-    expo install
+    npm install
     ```
 
 - [ ]  Correr el proyecto
