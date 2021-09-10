@@ -1,53 +1,133 @@
-# Instrucciones
-## Server
-Para correr el servidor, desde la carpeta de taller 2 punto 1:
+# TUTORIAL MSC
 
-    `cd server
-    mvn clean install exec:java`
-  
-  El servidor corre en `http://localhost:8080/myapp/`
-  Las rutas definidas son:
-  - `http://localhost:8080/myapp/travel/` con el método GET retorna todos los paseos en la base de datos
-  - `http://localhost:8080/myapp/travel/{idPaseo}` con el método DELETE elimina el paseo con el id {IdPaseo}
-  -`http://localhost:8080/myapp/travel/{idPaseo}?paseoOrigin={paseoOrigin}&paseoDest={paseoDest}` con el método PUT actualiza el Origen con {paseoOrigin} y el destino {paseoDest} para el paseo con el id {IdPaseo}
-   -`http://localhost:8080/myapp/travel/?paseoOrigin={paseoOrigin}&paseoDest={paseoDest}&name={paseoName}&date={paseoDate}&id={paseoId}` con el método POST crea un paseo con Origen {paseoOrigin}, destino {paseoDest}, id {IdPaseo}, fecha {datePaseo} y nombre {namePaseo}
-   
-## Cliente Jersey
+Date: September 9, 2021
+Done: No
 
-Para correr el cliente jersey, desde la carpeta de taller 2 punto 1:
+# PARA CORRER EL SERVIDOR
 
-    cd client
+- [ ]  Clonar el repositorio
+
+    ```bash
+    git clone https://github.com/danieltibaquira/MSCTaller2Punto1.git
+    ```
+
+- [ ]  Moverse a la carpeta ***server***
+
+    ```bash
+    cd server/
+    ```
+
+- [ ]  Correr el servidor
+
+    ```bash
     mvn clean install exec:java
-  Se mostrará un menú, escoja la acción a realizar y siga las instrucciones.
+    ```
 
-## Cliente React Native
-Para correr el cliente react native, desde la carpeta de taller 2 punto 1:
+- [ ]  Probar el servidor con el navegador o postman
+
+    La ruta base es GET -  [http://localhost:8080/myapp/travel/](http://localhost:8080/myapp/travel/) para obtener todos los paseos
+
+    Otras rutas son:
+
+    - DELETE - [http://localhost:8080/myapp/travel/](http://localhost:8080/myapp/travel/){idPaseo}: para eliminar un paseo
+    - PUT - [http://localhost:8080/myapp/travel/](http://localhost:8080/myapp/travel/){idPaseo}?paseoOrigin={nuevoOrigen}&paseoDest={nuevoDestino}
+    - POST -  [http://localhost:8080/myapp/travel/](http://localhost:8080/myapp/travel/) crear un paseo con el body:
+
+        ```bash
+        {
+        	"name":"nombre del paseo (String)",
+        	"origin":"origen del paseo (String)",
+        	"destination":"destino del paseo (String)",
+        	"date":"fecha del paseo (String formato yyyy-mm-dd",
+        	"id":"identificador del paseo (int)"
+        }
+        ```
+
+    Todos los datos serán peristidos en una base MongoDB
+
+# PARA CORRER EL CLIENTE JAVA
+
+- [ ]  Moverse a la carpeta ***client***
+
+    ```bash
+    cd client/ 
+    ```
+
+- [ ]  Correr el cliente
+
+    ```bash
+    mvn clean install exec:java
+    ```
+
+- [ ]  Seguir los pasos del menú
+
+# PARA CORRER EL CLIENTE MÓVIL
+
 Instalar las dependencias globales
 
-NodeJS:
+### NodeJS:
+
 - Para MacOS:
--- Instalar https://brew.sh
--- `brew install node@14`
-- Para windows
--- Seguir las instrucciones en https://nodejs.dev
+    - Instalar [https://brew.sh](https://brew.sh/)
+    - `brew install node@14`
+- Para windows -- Seguir las instrucciones en [https://nodejs.dev](https://nodejs.dev/)
 - Para Linux
--- Arch: yay -S nodejs-lts-fermium
--- Ubuntu: sudo apt install nodejs
+    - Arch: yay -S nodejs-lts-fermium
+    - Ubuntu: sudo apt install nodejs
 
-Expo-cli
+### Expo-cli
+
+Luego de instalar node
+
 - `sudo npm install -g expo-cli`
+- [ ]  Moverse a la carpeta ***client-rn***
 
-Ahora, nos movemos a la carpeta del proyecto:
+    ```bash
+    cd client-rn/ 
+    ```
 
-    cd client-rn
-Instalamos las dependencias
+- [ ]  Instalar las dependencias del proyecto
 
+    ```bash
     expo install
-Corremos el proyecto
+    ```
 
+- [ ]  Correr el proyecto
+
+    ```bash
     expo start --no-dev --minify
-Si deseamos correr el proyecto en un emulador de iOS presionar la letra ***i***
-Si deseamos correr el proyecto en un emulador de Android se debe iniciar con el siguiente comando
+    ```
 
-    emulator @<nombre_del_emulador> -dns-server 8.8.8.8
-Luego presionar la letra ***a***
+- [ ]  Abrir el simulador de iOS
+- [ ]  En el proceso de expo tocar la tecla ***i***
+
+### Si se desea correr en dispositivos android
+
+Instalar **Ngrok**
+
+- Seguir las instrucciones en [https://ngrok.com/download](https://ngrok.com/download)
+- Alternativamente `sudo npm install -g ngrok`
+- [ ]  Moverse a la carpeta ***server***
+
+    ```bash
+    cd server/
+    ```
+
+- [ ]  Crear el tunel
+
+    ```bash
+    ngrok http 8080
+    ```
+
+    - Genera un link del tipo [http://99fb-190-27-49-167.ngrok.io](http://99fb-190-27-49-167.ngrok.io/)
+- [ ]  Abrir el proyecto **client-rn**
+- [ ]  Abrir el archivo **/src/api/jersery.js**
+- [ ]  Reemplazar la línea: `baseURL: 'http://localhost:8080/myapp/travel'` por: `baseURL: '{tunel creado por ngrok}'`
+- [ ]  Correr el proyecto
+
+    ```bash
+    expo start --no-dev --minify
+    ```
+
+- [ ]  Abrir el simulador de Android
+- [ ]  En el proceso de expo tocar la tecla ***a***
